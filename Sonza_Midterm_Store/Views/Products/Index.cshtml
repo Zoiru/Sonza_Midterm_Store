@@ -1,0 +1,32 @@
+@model IEnumerable<Sonza_Midterm_Store.Models.Product>
+
+<h2>Products</h2>
+<a asp-action="Create" class="btn btn-primary">Add Product</a>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var p in Model)
+    {
+        <tr>
+            <td>@p.Name</td>
+            <td>@p.Description</td>
+            <td>@p.Price</td>
+            <td>@p.Category</td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-warning">Edit</a>
+                <a asp-action="Delete" asp-route-id="@p.Id" class="btn btn-danger">Delete</a>
+                <a asp-controller="Cart" asp-action="AddToCart" asp-route-id="@p.Id" class="btn btn-success">Add to Cart</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
