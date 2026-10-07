@@ -1,39 +1,43 @@
 @model IEnumerable<Sonza_Midterm_Store.Models.CartItem>
 
-<h2>My Cart</h2>
+<div class="container mt-4">
+    <h2 class="mb-3 text-success">My Cart</h2>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>Product</th>
-            <th>Price</th>
-            <th>Quantity</th>
-            <th>Total</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@item.Product.Name</td>
-            <td>@item.Product.Price</td>
-            <td>
-                <form asp-action="UpdateQuantity" method="post">
-                    <input type="hidden" name="id" value="@item.Id" />
-                    <input type="number" name="qty" value="@item.Quantity" min="1" />
-                    <button type="submit" class="btn btn-sm btn-info">Update</button>
-                </form>
-            </td>
-            <td>@(item.Product.Price * item.Quantity)</td>
-            <td>
-                <a asp-action="Remove" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Remove</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-light">
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+                <th class="text-center">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>₱@item.Product.Price</td>
+                <td>
+                    <form asp-action="UpdateQuantity" method="post" class="d-flex">
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <input type="number" name="qty" value="@item.Quantity" min="1" class="form-control form-control-sm me-2" />
+                        <button type="submit" class="btn btn-sm btn-info">Update</button>
+                    </form>
+                </td>
+                <td>₱@(item.Product.Price * item.Quantity)</td>
+                <td class="text-center">
+                    <a asp-action="Remove" asp-route-id="@item.Id" class="btn btn-sm btn-danger">
+                        <i class="bi bi-x-circle"></i> Remove
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 
-<h4>
-    Total: @Model.Sum(i => i.Product.Price * i.Quantity)
-</h4>
+    <div class="alert alert-primary text-end">
+        <strong>Total: ₱@Model.Sum(i => i.Product.Price * i.Quantity)</strong>
+    </div>
+</div>
